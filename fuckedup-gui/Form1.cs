@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using Timer = System.Windows.Forms.Timer;
 
 namespace fuckedup_gui
 {
@@ -39,6 +40,10 @@ namespace fuckedup_gui
 
         [DllImport("ntdll.dll")]
         public static extern uint NtRaiseHardError(uint ErrorStatus, uint NumberOfParameters, uint UnicodeStringParameterMask, IntPtr Parameters, uint ValidResponseOption, out uint Response);
+
+        private Timer countdownTimer;
+        private int remainingSeconds;
+        private NotifyIcon notifyIcon;
 
         public static string GetWindowsOSVersion()
         {
@@ -92,6 +97,11 @@ namespace fuckedup_gui
         {
             try{
                 InitializeComponent();
+                notifyIcon = new NotifyIcon
+                {
+                    Icon = SystemIcons.Warning,
+                    Visible = true
+                };
             }
             catch
             {
@@ -121,6 +131,46 @@ namespace fuckedup_gui
                 comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             }
         }
+
+        private void CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            if (remainingSeconds > 0)
+            {
+                remainingSeconds--;
+
+                if (checkBox5.Checked)
+                {
+                    notifyIcon.BalloonTipTitle = "Countdown";
+                    notifyIcon.BalloonTipText = $"Crashing in {remainingSeconds} seconds...";
+                    notifyIcon.ShowBalloonTip(20);
+                }
+
+                if (checkBox4.Checked)
+                {
+                    MessageBox.Show(
+                        $"Crashing in {remainingSeconds} seconds...",
+                        "Warning",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
+            }
+            else
+            {
+                countdownTimer.Stop();
+                MessageBox.Show(
+                    textBox1.Text,
+                    "Your time is up!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                // check if the stupid box is checked
+                if (!checkBox6.Checked)
+                {
+                    Crash();
+                }
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             bool now = checkBox2.Checked;
@@ -129,9 +179,11 @@ namespace fuckedup_gui
 
             if (custom)
             {
-                if (uint.TryParse(comboBox1.Text.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber, null, out stopCode))
+                if (uint.TryParse(comboBox1.Text.Replace("0x", ""),
+                    System.Globalization.NumberStyles.HexNumber,
+                    null,
+                    out stopCode))
                 {
-                    // Check if the stop code is valid
                     if (!IsValidStopCode(stopCode))
                     {
                         MessageBox.Show("Invalid stop code specified.");
@@ -151,30 +203,28 @@ namespace fuckedup_gui
 
             if (now)
             {
+                // 🚀 instant crash
                 Crash();
+                return;
             }
-            else
-            {
-                var result = MessageBox.Show("Warning: Continuing will initiate a process that may cause a Blue Screen of Death. Are you sure you want to proceed?", "Caution", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                if (result == DialogResult.Yes)
-                {
-                    if (spam)
-                    {
-                        for (;;)
-                        {
-                            new Thread(() =>
-                            {
-                                Crash();
-                            }).Start();
-                        }
-                    }
-                    else
-                    {
-                        Crash();
-                    }
-                }
-            }
+            var result = MessageBox.Show(
+                "Warning: Continuing will initiate a process that may cause a Blue Screen of Death. Are you sure you want to proceed?",
+                "Caution",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result != DialogResult.Yes)
+                return;
+
+            // 🐾 START TIMER INSTEAD OF CRASHING
+            remainingSeconds = (int)numericUpDown1.Value;
+
+            countdownTimer = new System.Windows.Forms.Timer();
+            countdownTimer.Interval = 1000; // 1 second
+            countdownTimer.Tick += CountdownTimer_Tick;
+            countdownTimer.Start();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

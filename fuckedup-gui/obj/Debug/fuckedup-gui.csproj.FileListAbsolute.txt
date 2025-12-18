@@ -1,0 +1,11 @@
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup-gui.csproj.AssemblyReference.cache
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup_gui.AboutBox1.resources
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup_gui.Form1.resources
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup_gui.Properties.Resources.resources
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup-gui.csproj.GenerateResource.cache
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup-gui.csproj.CoreCompileInputs.cache
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\bin\Debug\fuckedup-gui.exe.config
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\bin\Debug\fuckedup-gui.exe
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\bin\Debug\fuckedup-gui.pdb
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup-gui.exe
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup-gui\obj\Debug\fuckedup-gui.pdb

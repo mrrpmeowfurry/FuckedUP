@@ -1,0 +1,2 @@
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup\obj\Debug\fuckedup.csproj.AssemblyReference.cache
+C:\Users\mrrpmeowfurry\Desktop\FuckedUP\fuckedup\obj\Debug\fuckedup.csproj.CoreCompileInputs.cache
